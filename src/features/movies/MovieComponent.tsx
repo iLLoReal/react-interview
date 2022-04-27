@@ -9,7 +9,7 @@ const MovieComponent = (props: any) => {
    <Card>
       <CardHeader title={category} />
        <CardContent>{title}</CardContent>
-       <Button onClick={onButtonClick}>X</Button>
+       <Button onClick={(e) => onButtonClick(movie, e)}>X</Button>
    </Card>
   )
 };

@@ -19,8 +19,8 @@ export const MoviesManager = () => {
   const dispatch = useAppDispatch();
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const onButtonClick = (e:any) => {
-      console.log(e.target);
+  const handleDeleteButton = (movie: Movie, e:any) => {
+      dispatch(deleteMovie(movie));
   }
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export const MoviesManager = () => {
       <div key={movie.title + '/' + movie.id + '/' + movie.category}>
           <MovieComponent
             movie={movie}
-            onButtonClick={onButtonClick}
+            onButtonClick={handleDeleteButton}
           />
       </div>
       )}
