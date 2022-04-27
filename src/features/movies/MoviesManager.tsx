@@ -10,7 +10,7 @@ import {
   loadMovies
 } from './moviesSlice';
 import { Movie } from '../../types';
-import MovieComponent from './Movies';
+import MovieComponent from './MovieComponent';
 import styles from './Movies.module.css';
 import { Grid } from '@mui/material';
 
