@@ -1,0 +1,14 @@
+.movie {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 1vh;
+}
+
+.movieManager {
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+  margin: auto;
+}
