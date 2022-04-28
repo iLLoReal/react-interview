@@ -9,13 +9,15 @@ import {
 import { Movie } from '../../types';
 import MovieComponent from './MovieComponent';
 import styles from './Movies.module.css';
-import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, Grid, InputLabel, MenuItem, Select, Button } from '@mui/material';
+import MultiSelect from '../MultiSelect/MultiSelect';
 
 export const MoviesManager = () => {
   const moviesStore = useAppSelector(selectMovies);
   const dispatch = useAppDispatch();
   //const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [selectedCategory, setSelectedCategory] = useState(moviesStore?.categories[0]);
+  const [currentItems, setCurrentItems] = useState(null);
 
   const handleDeleteButton = (movie: Movie, e: any) => {
     dispatch(deleteMovie(movie));
@@ -31,43 +33,33 @@ export const MoviesManager = () => {
     if (!moviesStore.movies.length) {
       dispatch(loadMovies())
     }
-  }, [dispatch, moviesStore.movies])
+  }, [dispatch, moviesStore.movies.length])
 
   useEffect(() => {
-    if ((selectedCategory === undefined || !(moviesStore.categories.some((e) => e === selectedCategory))) && moviesStore.categories.length) {
-      setSelectedCategory(moviesStore.categories[0]);
-      console.log('In here');
-      console.log(moviesStore.categories);
+    if ((selectedCategory === undefined 
+      || !(moviesStore.categories.some((e) => e === selectedCategory)))
+       && moviesStore.categories.length) {
+        setSelectedCategory(moviesStore.categories[0]);
+        console.log('In here');
     }
   }, [selectedCategory, moviesStore.categories])
 
   return (
     <>
-    {selectedCategory && moviesStore.categories.includes(selectedCategory) &&
-      <FormControl>
-        <InputLabel id='select-movie-label'>Movie</InputLabel>
-        <Select
-          labelId='select-movie-label'
-          id='select-movie'
-          value={selectedCategory}
-          onChange={handleSelectChange}
-        >
-          {moviesStore.categories.map((category: string, id: number) =>
-            <MenuItem
-              key={'category/' + category + '/' + id}
-              value={category}>{category}
-            </MenuItem>
-          )}
-        </Select>
-      </FormControl>
-    }
+    <MultiSelect
+      selected={selectedCategory}
+      items={moviesStore.categories}
+      onChange={handleSelectChange}
+      name={'category'}
+    />
       <Grid
         container
         spacing={{ xs: 3, md: 3 }}
         rowSpacing={{ xs: 2, sm: 4, md: 6 }}
         className={styles.movieGrid}
       >
-        {moviesStore.movies.filter((movie) => movie.category === selectedCategory).map((movie: Movie) =>
+        {moviesStore.movies.filter((movie) => movie.category === selectedCategory).map((movie: Movie, id: number) =>
+        
           <Grid
             item
             rowSpacing={{ xs: 2, sm: 4, md: 6 }}

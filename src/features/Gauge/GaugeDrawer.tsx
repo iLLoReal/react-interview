@@ -29,7 +29,7 @@ const GaugeDrawer = (props: any) => {
   const handleLike = (e: any) => {
     setLikeToggle({like: !likeToggle.like, dislike: false});
     setLikeDislikeSx({
-      likeSx: { ...likeDislikeSx.likeSx, color: likeDislikeSx.likeSx.color === 'darkgreen' ? 'green' : 'darkgreen'},
+      likeSx: { ...likeDislikeSx.likeSx, color: likeDislikeSx.likeSx.color === 'darkgreen' ? 'lightgreen' : 'darkgreen'},
       dislikeSx: { ...likeDislikeSx.dislikeSx, color: 'darkred'}
     });
   }
