@@ -17,7 +17,7 @@ const initialState: MoviesState = {
   status: 'idle',
 };
 
-const filterCategories = (state: MoviesState) => {
+export const filterCategories = (state: MoviesState) => {
   state.categories = state.categories.filter((category) => state.movies.some((movie) => category === movie.category));
   state.movies.forEach((movie) => {
     if (!state.categories.some((category) => movie.category === category))
@@ -25,14 +25,9 @@ const filterCategories = (state: MoviesState) => {
   });
 }
 
-
 const addMissingCategory = (state: MoviesState, potentiallyNewCategory: string) => {
   if (!state.categories.some((category: string) => potentiallyNewCategory === category))
     state.categories.push(potentiallyNewCategory);
-}
-
-const filterCategory = (state: MoviesState, givenCategory: string) => {
-  state.categories = state.categories.filter((category) => givenCategory === category);
 }
 
 export const getMovieById = createAsyncThunk(
@@ -65,13 +60,12 @@ export const moviesSlice = createSlice({
       if (movieIndex !== -1) {
         state.movies.splice(movieIndex, 1, newMovie)
       }
-      addMissingCategory(state, action.payload.category);
-      filterCategory(state, action.payload.category);
+      filterCategories(state);
     },
     deleteMovie: (state, action: PayloadAction<Movie>) => {
       const movieIndex = state.movies.findIndex(e => e?.id === action.payload.id);
       state.movies.splice(movieIndex, 1);
-      filterCategory(state, action.payload.category);
+      filterCategories(state);
     },
   },
   extraReducers: (builder) => {
