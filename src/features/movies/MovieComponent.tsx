@@ -1,18 +1,30 @@
-import { Box, Button, Card, CardContent, CardHeader } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader
+} from '@mui/material';
+import GaugeDrawer from '../Gauge/GaugeDrawer';
 import styles from './Movies.module.css';
 
 const MovieComponent = (props: any) => {
   const { movie, onButtonClick } = props;
-  const { title, category } = movie;
+  const {
+    title,
+    category,
+    likes,
+    dislikes
+  } = movie;
 
-   return (
-   <Card>
-      <CardHeader 
-        titleTypographyProps={{fontWeight: 'bold', variant: 'h5'}}
-        className={styles.movie} title={title}/>
-       <CardContent> {category}</CardContent>
-       <Button onClick={(e) => onButtonClick(movie, e)}>X</Button>
-   </Card>
+  return (
+    <Card>
+      <CardHeader
+        titleTypographyProps={{ fontWeight: 'bold', variant: 'h2' }}
+        className={styles.movie} title={title} />
+      <CardContent>{category}</CardContent>
+      <GaugeDrawer likes={likes} dislikes={dislikes} />
+      <Button onClick={(e) => onButtonClick(movie, e)}>X</Button>
+    </Card>
   )
 };
 

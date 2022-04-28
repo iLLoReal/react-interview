@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
-  addMovie,
-  updateMovie,
+  //addMovie,
+  //updateMovie,
   deleteMovie,
-  getMovieById,
+  //getMovieById,
   selectMovies,
   loadMovies
 } from './moviesSlice';
@@ -17,7 +17,7 @@ import { Grid } from '@mui/material';
 export const MoviesManager = () => {
   const moviesStore = useAppSelector(selectMovies);
   const dispatch = useAppDispatch();
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  //const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   const handleDeleteButton = (movie: Movie, e: any) => {
     dispatch(deleteMovie(movie));
