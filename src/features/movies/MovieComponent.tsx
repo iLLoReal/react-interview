@@ -6,7 +6,7 @@ import {
   CardHeader,
   Typography
 } from '@mui/material';
-import GaugeDrawer from '../Gauge/GaugeDrawer';
+import GaugeDrawer from '../gauge/GaugeDrawer';
 import styles from './Movies.module.css';
 
 const MovieComponent = (props: any) => {

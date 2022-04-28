@@ -10,7 +10,7 @@ import { Movie } from '../../types';
 import MovieComponent from './MovieComponent';
 import styles from './Movies.module.css';
 import { FormControl, Grid, InputLabel, MenuItem, Select, Button } from '@mui/material';
-import MultiSelect from '../MultiSelect/MultiSelect';
+import MultiSelect from '../multi-select/MultiSelect';
 
 export const MoviesManager = () => {
   const moviesStore = useAppSelector(selectMovies);
