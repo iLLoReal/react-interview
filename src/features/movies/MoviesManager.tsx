@@ -32,14 +32,14 @@ export const MoviesManager = () => {
   return (
     <Grid
       container
-      spacing={{ xs: 2, md: 2 }}
-      rowSpacing={{ xs: 1, sm: 2, md: 3 }}
+      spacing={{ xs: 8, md: 8 }}
+      rowSpacing={{ xs: 2, sm: 4, md: 6 }}
       className={styles.movieGrid}
     >
       {moviesStore.movies.map((movie: Movie) =>
         <Grid
           item
-          rowSpacing={{ xs: 1, sm: 2, md: 3 }}
+          rowSpacing={{ xs: 2, sm: 4, md: 6 }}
           key={movie.title + '/' + movie.id + '/' + movie.category}
         >
           <MovieComponent
