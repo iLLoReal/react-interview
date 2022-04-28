@@ -32,7 +32,7 @@ export const MoviesManager = () => {
   return (
     <Grid
       container
-      spacing={{ xs: 8, md: 8 }}
+      spacing={{ xs: 3, md: 3 }}
       rowSpacing={{ xs: 2, sm: 4, md: 6 }}
       className={styles.movieGrid}
     >

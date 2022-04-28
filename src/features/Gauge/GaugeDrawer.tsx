@@ -25,12 +25,12 @@ const GaugeDrawer = (props: any) => {
           position: 'relative',
           width: ratio + '%',
           background: 'green',
-          height: '0.5vw',
+          height: '0.5vh',
         }}>
         </div>
       </div>
       <div>
-        <ThumbUpIcon sx={{color: 'green'}}/> {likes} <ThumbDownIcon sx={{color: 'red'}}/> {dislikes}
+        <ThumbUpIcon sx={{color: 'green', fontSize: '1.5vh'}}/> {likes} <ThumbDownIcon sx={{color: 'red', fontSize: '1.5vh'}}/> {dislikes}
       </div>
     </>
   )

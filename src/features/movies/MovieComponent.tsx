@@ -1,8 +1,10 @@
 import {
   Button,
   Card,
+  CardActions,
   CardContent,
-  CardHeader
+  CardHeader,
+  Typography
 } from '@mui/material';
 import GaugeDrawer from '../Gauge/GaugeDrawer';
 import styles from './Movies.module.css';
@@ -21,9 +23,11 @@ const MovieComponent = (props: any) => {
       <CardHeader
         titleTypographyProps={{ fontWeight: 'bold', variant: 'h5' }}
         className={styles.movie} title={title} />
-      <CardContent sx={{fontSize: '2vh'}} >{category}</CardContent>
+      <Typography variant="body2" color="text.secondary">{category}</Typography>
       <GaugeDrawer likes={likes} dislikes={dislikes} />
-      <Button onClick={(e) => onButtonClick(movie, e)}>X</Button>
+      <CardActions>
+        <Button size="small" onClick={(e) => onButtonClick(movie, e)}>Delete</Button>
+      </CardActions>
     </Card>
   )
 };
