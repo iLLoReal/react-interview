@@ -8,9 +8,9 @@ import {
 } from './moviesSlice';
 import { Movie } from '../../types';
 import MovieComponent from './MovieComponent';
-import styles from './Movies.module.css';
 import { FormControl, Grid, InputLabel, MenuItem, Select, Button } from '@mui/material';
 import MultiSelect from '../multi-select/MultiSelect';
+import PaginateMovies from './PaginateMovies';
 
 export const MoviesManager = () => {
   const moviesStore = useAppSelector(selectMovies);
@@ -25,7 +25,7 @@ export const MoviesManager = () => {
     console.log(moviesStore);
   }
 
-  const handleSelectChange = (e :any) => {
+  const handleSelectChange = (e: any) => {
     setSelectedCategory(e.target.value);
   }
 
@@ -36,42 +36,27 @@ export const MoviesManager = () => {
   }, [dispatch, moviesStore.movies.length])
 
   useEffect(() => {
-    if ((selectedCategory === undefined 
+    if ((selectedCategory === undefined
       || !(moviesStore.categories.some((e) => e === selectedCategory)))
-       && moviesStore.categories.length) {
-        setSelectedCategory(moviesStore.categories[0]);
-        console.log('In here');
+      && moviesStore.categories.length) {
+      setSelectedCategory(moviesStore.categories[0]);
+      console.log('In here');
     }
   }, [selectedCategory, moviesStore.categories])
 
   return (
     <>
-    <MultiSelect
-      selected={selectedCategory}
-      items={moviesStore.categories}
-      onChange={handleSelectChange}
-      name={'category'}
-    />
-      <Grid
-        container
-        spacing={{ xs: 3, md: 3 }}
-        rowSpacing={{ xs: 2, sm: 4, md: 6 }}
-        className={styles.movieGrid}
-      >
-        {moviesStore.movies.filter((movie) => movie.category === selectedCategory).map((movie: Movie, id: number) =>
-        
-          <Grid
-            item
-            rowSpacing={{ xs: 2, sm: 4, md: 6 }}
-            key={movie.title + '/' + movie.id + '/' + movie.category}
-          >
-            <MovieComponent
-              movie={movie}
-              onButtonClick={handleDeleteButton}
-            />
-          </Grid>
-        )}
-      </Grid>
+      <MultiSelect
+        selected={selectedCategory}
+        items={moviesStore.categories}
+        onChange={handleSelectChange}
+        name={'category'}
+      />
+      <PaginateMovies
+        movies={moviesStore.movies.filter((movie) => movie.category === selectedCategory)}
+        maxItemsPerPage={3}
+        onButtonClick={handleDeleteButton}
+      />
     </>
   );
 }
