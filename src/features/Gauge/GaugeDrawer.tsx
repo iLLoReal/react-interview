@@ -8,7 +8,38 @@ const getPercentage = (likes: number, dislikes: number) => {
 
 const GaugeDrawer = (props: any) => {
   const { likes, dislikes } = props;
+  const likeSx = {
+    cursor: 'pointer',
+    color: 'darkgreen',
+    fontSize: '1.5vh'
+  };
+  const dislikeSx = {
+    cursor: 'crosshair',
+    color: 'darkred',
+    fontSize: '1.5vh'
+  };
+
   const [ratio, setRatio] = useState(getPercentage(likes, dislikes));
+  const [likeToggle, setLikeToggle] = useState({ like: false, dislike: false });
+  const [likeDislikeSx, setLikeDislikeSx] = useState({ likeSx: likeSx, dislikeSx: dislikeSx })
+
+  
+
+
+  const handleLike = (e: any) => {
+    setLikeToggle({like: true, dislike: false});
+    setLikeDislikeSx({
+      likeSx: { ...likeDislikeSx.likeSx, color: 'green'},
+      dislikeSx: { ...likeDislikeSx.dislikeSx, color: 'darkred'}
+    });
+  }
+  const handleDislike = (e: any) => {
+    setLikeToggle({like: false, dislike: true});
+    setLikeDislikeSx({
+      likeSx: { ...likeDislikeSx.likeSx, color: 'darkgreen'},
+      dislikeSx: { ...likeDislikeSx.dislikeSx, color: 'red'}
+    });
+  }
 
   useEffect(() => {
     setRatio(getPercentage(likes, dislikes));
@@ -30,7 +61,8 @@ const GaugeDrawer = (props: any) => {
         </div>
       </div>
       <div>
-        <ThumbUpIcon sx={{color: 'green', fontSize: '1.5vh'}}/> {likes} <ThumbDownIcon sx={{color: 'red', fontSize: '1.5vh'}}/> {dislikes}
+        <ThumbUpIcon onClick={handleLike} sx={likeDislikeSx.likeSx} />
+        {likes} <ThumbDownIcon onClick={handleDislike} sx={likeDislikeSx.dislikeSx}/> {dislikes}
       </div>
     </>
   )
