@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { Movie } from '../../types'; 
+import { Movie } from '../../types';
 import { fetchMovie, fetchMovies } from './moviesAPI';
 
 export interface MoviesState {
@@ -12,17 +12,23 @@ export interface MoviesState {
 
 const initialState: MoviesState = {
   movies: [],
-  selectedMovie: {id: '', title: '', category: '', likes: 0, dislikes: 0},
+  selectedMovie: { id: '', title: '', category: '', likes: 0, dislikes: 0 },
   categories: [],
   status: 'idle',
 };
 
 const filterCategories = (state: MoviesState) => {
   state.categories = state.categories.filter((category) => state.movies.some((movie) => category === movie.category));
-  state.movies.forEach((movie) => { 
+  state.movies.forEach((movie) => {
     if (!state.categories.some((category) => movie.category === category))
       state.categories.push(movie.category);
-    });
+  });
+}
+
+
+const addMissingCategory = (state: MoviesState, potentiallyNewCategory: string) => {
+  if (!state.categories.some((category: string) => potentiallyNewCategory === category))
+    state.categories.push(potentiallyNewCategory);
 }
 
 const filterCategory = (state: MoviesState, givenCategory: string) => {
@@ -85,7 +91,6 @@ export const moviesSlice = createSlice({
       })
       .addCase(loadMovies.fulfilled, (state, action) => {
         state.status = 'idle';
-        console.log(`ici notre payload vaut ${action.payload}`);
         state.movies = action.payload;
         filterCategories(state);
       })
@@ -96,21 +101,5 @@ export const moviesSlice = createSlice({
 });
 
 export const { addMovie, updateMovie, deleteMovie } = moviesSlice.actions;
-
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectMovies = (state: RootState) => state.movies;
-
-// We can also write thunks by hand, which may contain both sync and async logic.
-// Here's an example of conditionally dispatching actions based on current state.
-
-
 export default moviesSlice.reducer;
-
-
-const addMissingCategory = (state: MoviesState, potentiallyNewCategory: string) => {
-    if (!state.categories.some((category: string) => potentiallyNewCategory === category))
-      state.categories.push(potentiallyNewCategory);
-}
-

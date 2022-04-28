@@ -30,9 +30,18 @@ export const MoviesManager = () => {
   }, [dispatch, moviesStore])
 
   return (
-    <Grid container spacing={{ xs: 2, md: 2 }} rowSpacing={{ xs: 1, sm: 2, md: 3 }} className={styles.movieGrid} margin={'auto'}>
+    <Grid
+      container
+      spacing={{ xs: 2, md: 2 }}
+      rowSpacing={{ xs: 1, sm: 2, md: 3 }}
+      className={styles.movieGrid}
+    >
       {moviesStore.movies.map((movie: Movie) =>
-        <Grid item rowSpacing={{ xs: 1, sm: 2, md: 3}} key={movie.title + '/' + movie.id + '/' + movie.category}>
+        <Grid
+          item
+          rowSpacing={{ xs: 1, sm: 2, md: 3 }}
+          key={movie.title + '/' + movie.id + '/' + movie.category}
+        >
           <MovieComponent
             movie={movie}
             onButtonClick={handleDeleteButton}
