@@ -1,5 +1,5 @@
 import { Button, Grid } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Movie } from '../../types';
 import MovieComponent from './MovieComponent';
 import styles from './Movies.module.css';
@@ -13,11 +13,10 @@ const PaginateMovies = (props: any) => {
   const [currentMovies, setCurrentMovies] = useState(movies);
   const [itemOffset, setItemOffset] = useState(0);
 
-  const handlePageChange = (e:any) => {
+  const handlePageChange = useCallback((e:any) => {
     const localCurrentPage = parseInt(e.target.innerText, 10);
-    console.log(localCurrentPage);
     setItemOffset((localCurrentPage * maxItemsPerPage) % movies.length);
-  }
+  }, [maxItemsPerPage, movies.length]);
 
   const [pagesButton] = useState<any>([]);
 
@@ -33,7 +32,7 @@ const PaginateMovies = (props: any) => {
       for (let i = 0; i < Math.ceil(movies.length / maxItemsPerPage); i++) {
         pagesButton.push(<Button onClick={handlePageChange} key={'page'+ i}>{i}</Button>);
       }
-  }, [movies]);
+  }, [movies, maxItemsPerPage, handlePageChange, pagesButton]);
 
   return (
     <>
