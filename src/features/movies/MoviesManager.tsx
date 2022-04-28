@@ -19,26 +19,25 @@ export const MoviesManager = () => {
   const dispatch = useAppDispatch();
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const handleDeleteButton = (movie: Movie, e:any) => {
-      dispatch(deleteMovie(movie));
+  const handleDeleteButton = (movie: Movie, e: any) => {
+    dispatch(deleteMovie(movie));
   }
 
   useEffect(() => {
     if (!moviesStore.movies.length) {
       dispatch(loadMovies())
     }
-    console.log('Inside useEffect');
   }, [dispatch, moviesStore])
 
   return (
-    <Grid columnSpacing='200px'>
+    <Grid container spacing={{ xs: 2, md: 2 }} rowSpacing={{ xs: 1, sm: 2, md: 3 }} className={styles.movieGrid} margin={'auto'}>
       {moviesStore.movies.map((movie: Movie) =>
-      <div key={movie.title + '/' + movie.id + '/' + movie.category}>
+        <Grid item rowSpacing={{ xs: 1, sm: 2, md: 3}} key={movie.title + '/' + movie.id + '/' + movie.category}>
           <MovieComponent
             movie={movie}
             onButtonClick={handleDeleteButton}
           />
-      </div>
+        </Grid>
       )}
     </Grid>
   );

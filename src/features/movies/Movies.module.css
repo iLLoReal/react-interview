@@ -1,14 +1,10 @@
 .movie {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin: 1vh;
+  font-weight:bold;
 }
 
-.movieManager {
+.movieGrid {
   display: flex;
-  flex-direction:row;
-  justify-content: space-between;
-  margin: auto;
+  flex-direction: row;
+  justify-content:center;
+  min-width: min-content;
 }
