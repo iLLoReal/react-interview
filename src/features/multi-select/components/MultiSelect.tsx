@@ -1,45 +1,59 @@
 import {
+  Autocomplete,
+  AutocompleteChangeDetails,
+  AutocompleteChangeReason,
+  Chip,
   FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
+  TextField,
 } from '@mui/material';
+import { SyntheticEvent } from 'react';
 
-export type SelectChangeEventHandler = (event: SelectChangeEvent<string>) => void
+export type SelectChangeEventHandler = (
+  event: SyntheticEvent<Element, Event>,
+  value: string[],
+  reason: AutocompleteChangeReason,
+  details?: AutocompleteChangeDetails<string> | undefined
+) => void;
 
 export interface MultiSelectProps {
-  selected: string,
+  selected: string[],
   onChange: SelectChangeEventHandler,
   items: string[],
-  name: string,
+  label: string,
 }
 
 const MultiSelect = ({
   selected,
   onChange,
   items,
-  name
+  label,
 }: MultiSelectProps) => {
 
   return (
     <>
-      {selected && items.includes(selected) &&
+      {selected &&
         <FormControl>
-          <InputLabel id='select-movie-label'>Movie</InputLabel>
-          <Select
-            labelId='select-movie-label'
-            id='select-movie'
+          <Autocomplete
+            multiple
+            id="select-movie"
             value={selected}
             onChange={onChange}
-          >
-            {items.map((item: string, id: number) =>
-              <MenuItem
-                key={`${name}/${item}/${id}`}
-                value={item}>{item}
-              </MenuItem>
+            options={items}
+            getOptionLabel={(option: string) => option}
+            renderTags={(tagValue, getTagProps) =>
+              tagValue.map((option, index) => (
+                <Chip
+                  label={option}
+                  {...getTagProps({ index })}
+                  disabled={false}
+                />
+              ))
+            }
+            style={{maxWidth: 'min-content'}}
+            renderInput={(params) => (
+              <TextField {...params} label={label} placeholder="Favorites" />
             )}
-          </Select>
+          />
         </FormControl>
       }
     </>

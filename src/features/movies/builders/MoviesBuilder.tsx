@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { SelectChangeEvent } from '@mui/material';
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { AutocompleteChangeDetails, AutocompleteChangeReason } from '@mui/material';
 
 import { useAppSelector, useAppDispatch } from '../../../app/state/hooks';
 import {
@@ -18,15 +18,20 @@ export const MoviesBuilder = () => {
   const moviesStore = useAppSelector(selectMovies);
   const dispatch = useAppDispatch();
   //const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState(moviesStore.categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState(moviesStore.categories);
   const [maxItemsPerPage, setMaxItemsPerPage] = useState(3);
 
   const handleDeleteButton = (movie: MovieElement) => {
     dispatch(deleteMovie(movie));
   }
 
-  const handleSelectChange = (event: SelectChangeEvent<string>) => {
-    setSelectedCategory(event.target.value);
+  const handleSelectChange = (
+    event: SyntheticEvent<Element, Event>,
+    value: string[],
+    reason: AutocompleteChangeReason,
+    details?: AutocompleteChangeDetails<string> | undefined
+  ) => {
+    setSelectedCategory(value);
   }
 
   const handleMaxItemsChange = (event: InputChangeEvent) => {
@@ -43,9 +48,10 @@ export const MoviesBuilder = () => {
 
   useEffect(() => {
     if ((selectedCategory === undefined
-      || !(moviesStore.categories.some((e) => e === selectedCategory)))
+      || !(moviesStore.categories.some((e) => selectedCategory.includes(e))))
       && moviesStore.categories.length) {
-      setSelectedCategory(moviesStore.categories[0]);
+        console.log('oups');
+      setSelectedCategory(moviesStore.categories);
     }
   }, [selectedCategory, moviesStore.categories])
 
@@ -55,13 +61,13 @@ export const MoviesBuilder = () => {
         selected={selectedCategory}
         items={moviesStore.categories}
         onChange={handleSelectChange}
-        name={'category'}
+        label={'category'}
       />
       <Pagination 
         setter={handleMaxItemsChange}
       />
       <PaginateMovies
-        movies={moviesStore.movies.filter((movie) => movie.category === selectedCategory)}
+        movies={moviesStore.movies.filter((movie) => selectedCategory.includes(movie.category))}
         maxItemsPerPage={maxItemsPerPage}
         onButtonClick={handleDeleteButton}
       />

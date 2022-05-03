@@ -15,7 +15,7 @@ const Pagination = ({setter}: PaginationProps) => {
     <>
       <FormControl sx={{ marginLeft: '1vh' }}>
         <InputLabel id='pagination'>Number of items per page</InputLabel>
-        <Input onChange={setter} />
+        <Input defaultValue={3} onChange={setter} />
       </FormControl>
     </>
   )
