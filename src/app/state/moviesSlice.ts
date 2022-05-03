@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { MovieElement } from '../../features/movies/components/MovieComponent';
+import { MovieElement } from '../../features/movies/components/Movie';
 import { fetchMovie, fetchMovies } from '../api/moviesAPI';
 
 export interface MoviesState {

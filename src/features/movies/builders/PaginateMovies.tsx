@@ -5,7 +5,7 @@ import React, {
 } from 'react';
 import { Button, Grid } from '@mui/material';
 
-import Movie, { MovieElement, MovieButtonHandler } from '../components/MovieComponent';
+import Movie, { MovieElement, MovieButtonHandler } from '../components/Movie';
 import styles from '../MovieComponent.module.css';
 import { ButtonElement } from '../../../app/types';
 

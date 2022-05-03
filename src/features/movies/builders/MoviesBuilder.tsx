@@ -7,7 +7,7 @@ import {
   selectMovies,
   loadMovies,
 } from '../../../app/state/moviesSlice';
-import { MovieElement } from '../components/MovieComponent';
+import { MovieElement } from '../components/Movie';
 import { InputChangeEvent } from '../../../app/types';
 import MultiSelect from '../../multi-select/components/MultiSelect';
 import PaginateMovies from './PaginateMovies';
