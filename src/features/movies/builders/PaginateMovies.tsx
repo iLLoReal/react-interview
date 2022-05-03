@@ -25,6 +25,16 @@ const PaginateMovies = ({
   const [currentMovies, setCurrentMovies] = useState(movies);
   const [itemOffset, setItemOffset] = useState(0);
 
+ /* const setCurrentMovie = (movie: MovieElement) => {
+    const currentMoviesTemp = [...currentMovies];
+
+    const movieIndex = currentMoviesTemp.findIndex((mov: MovieElement) => mov.id === movie.id);
+    if (movieIndex !== -1) {
+      currentMoviesTemp.splice(movieIndex, 1, movie);
+      setCurrentMovies(currentMoviesTemp);
+    }
+  }*/
+
   const handlePageChange = useCallback((e: React.MouseEvent) => {
     const localCurrentPage = parseInt((e.target as HTMLElement).innerText, 10);
     setItemOffset((localCurrentPage * maxItemsPerPage) % movies.length);

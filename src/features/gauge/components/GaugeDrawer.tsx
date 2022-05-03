@@ -3,42 +3,49 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 const getPercentage = (likes: number, dislikes: number) => {
-  return Math.round(100 * likes / (likes + dislikes));
+  return Math.floor(100 * likes / (likes + dislikes));
 }
 
-const GaugeDrawer = (props: any) => {
-  const { likes, dislikes } = props;
+export interface GaugeDrawerProps {
+  likes: number,
+  dislikes: number,
+  setLikes: (likes: number) => void,
+  setDislikes: (disLikes: number) => void,
+}
+
+const GaugeDrawer = ({likes, dislikes, setLikes, setDislikes}: GaugeDrawerProps) => {
   const likeSx = {
     cursor: 'pointer',
     color: 'darkgreen',
-    fontSize: '1.5vh'
+    fontSize: '3.5vh'
   };
   const dislikeSx = {
     cursor: 'crosshair',
     color: 'darkred',
-    fontSize: '1.5vh'
+    fontSize: '3.5vh'
   };
 
   const [ratio, setRatio] = useState(getPercentage(likes, dislikes));
   const [likeToggle, setLikeToggle] = useState({ like: false, dislike: false });
   const [likeDislikeSx, setLikeDislikeSx] = useState({ likeSx: likeSx, dislikeSx: dislikeSx })
 
-  
-
-
-  const handleLike = (e: any) => {
-    setLikeToggle({like: !likeToggle.like, dislike: false});
+  const handleLike = () => {
     setLikeDislikeSx({
       likeSx: { ...likeDislikeSx.likeSx, color: likeDislikeSx.likeSx.color === 'darkgreen' ? 'lightgreen' : 'darkgreen'},
       dislikeSx: { ...likeDislikeSx.dislikeSx, color: 'darkred'}
     });
+    setLikes((!likeToggle.like) ? likes + 1 : likes - 1);
+    setDislikes((likeToggle.dislike) ? dislikes - 1 : dislikes);
+    setLikeToggle({like: !likeToggle.like, dislike: false});
   }
-  const handleDislike = (e: any) => {
-    setLikeToggle({like: false, dislike: !likeToggle.dislike});
+  const handleDislike = () => {
     setLikeDislikeSx({
       likeSx: { ...likeDislikeSx.likeSx, color: 'darkgreen'},
       dislikeSx: { ...likeDislikeSx.dislikeSx, color: likeDislikeSx.dislikeSx.color === 'darkred' ? 'red' : 'darkred'}
     });
+    setDislikes((!likeToggle.dislike) ? dislikes + 1 : dislikes - 1);
+    setLikes((likeToggle.like) ? likes - 1 : likes);
+    setLikeToggle({like: false, dislike: !likeToggle.dislike});
   }
 
   useEffect(() => {
