@@ -1,33 +1,36 @@
 import { useEffect, useState } from 'react';
+import { SelectChangeEvent } from '@mui/material';
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../../app/state/hooks';
 import {
   deleteMovie,
   selectMovies,
   loadMovies,
-} from './moviesSlice';
-import { Movie } from '../../types';
-import MultiSelect from '../multi-select/MultiSelect';
+} from '../../../app/state/moviesSlice';
+import { MovieElement } from '../components/MovieComponent';
+import { InputChangeEvent } from '../../../app/types';
+import MultiSelect from '../../multi-select/components/MultiSelect';
 import PaginateMovies from './PaginateMovies';
-import MaxMoviesPerPageInput from './MaxMoviesPerPageInput';
+import Pagination from '../components/Pagination';
 
-export const MoviesManager = () => {
+
+export const MoviesBuilder = () => {
   const moviesStore = useAppSelector(selectMovies);
   const dispatch = useAppDispatch();
   //const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState(moviesStore?.categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState(moviesStore.categories[0]);
   const [maxItemsPerPage, setMaxItemsPerPage] = useState(3);
 
-  const handleDeleteButton = (movie: Movie, e: any) => {
+  const handleDeleteButton = (movie: MovieElement) => {
     dispatch(deleteMovie(movie));
   }
 
-  const handleSelectChange = (e: any) => {
-    setSelectedCategory(e.target.value);
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    setSelectedCategory(event.target.value);
   }
 
-  const handleMaxItemsChange = (e: any) => {
-    const newValue = parseInt(e.target.value, 10);
+  const handleMaxItemsChange = (event: InputChangeEvent) => {
+    const newValue = parseInt(event.target.value, 10);
     if (!isNaN(newValue))
       setMaxItemsPerPage(newValue);
   }
@@ -54,7 +57,7 @@ export const MoviesManager = () => {
         onChange={handleSelectChange}
         name={'category'}
       />
-      <MaxMoviesPerPageInput 
+      <Pagination 
         setter={handleMaxItemsChange}
       />
       <PaginateMovies

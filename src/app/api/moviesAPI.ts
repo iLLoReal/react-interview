@@ -1,9 +1,9 @@
 import { movies$ } from '../../movies'
-import { Movie } from '../../types';
+import { MovieElement } from '../../features/movies/components/MovieComponent';
 
 export const fetchMovie = async (movieId: string) => {
   return {
-    data: (await movies$).find((movie: Movie) => movie.id === movieId)
+    data: (await movies$).find((movie: MovieElement) => movie.id === movieId)
   };
 }
 

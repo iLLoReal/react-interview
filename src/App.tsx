@@ -1,4 +1,4 @@
-import { MoviesManager } from './features/movies/MoviesManager';
+import { MoviesBuilder } from './features/movies/builders/MoviesBuilder';
 import './App.css';
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <span>
-          <MoviesManager />
+          <MoviesBuilder />
         </span>
       </header>
     </div>

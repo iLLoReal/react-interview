@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
-import { Movie } from '../../types';
-import { fetchMovie, fetchMovies } from './moviesAPI';
+import { RootState } from './store';
+import { MovieElement } from '../../features/movies/components/MovieComponent';
+import { fetchMovie, fetchMovies } from '../api/moviesAPI';
 
 export interface MoviesState {
-  movies: Movie[];
-  selectedMovie: Movie;
+  movies: MovieElement[];
+  selectedMovie: MovieElement;
   categories: string[];
   status: 'idle' | 'loading' | 'failed';
 }
@@ -50,19 +50,19 @@ export const moviesSlice = createSlice({
   name: 'movies',
   initialState,
   reducers: {
-    addMovie: (state, action: PayloadAction<Movie>) => {
+    addMovie: (state, action: PayloadAction<MovieElement>) => {
       state.movies.push(action.payload);
       addMissingCategory(state, action.payload.category);
     },
-    updateMovie: (state, action: PayloadAction<Movie>) => {
-      const newMovie: Movie = action.payload;
+    updateMovie: (state, action: PayloadAction<MovieElement>) => {
+      const newMovie: MovieElement = action.payload;
       const movieIndex = state.movies.findIndex(movie => movie?.id === newMovie.id);
       if (movieIndex !== -1) {
         state.movies.splice(movieIndex, 1, newMovie)
       }
       filterCategories(state);
     },
-    deleteMovie: (state, action: PayloadAction<Movie>) => {
+    deleteMovie: (state, action: PayloadAction<MovieElement>) => {
       const movieIndex = state.movies.findIndex(e => e?.id === action.payload.id);
       state.movies.splice(movieIndex, 1);
       filterCategories(state);
