@@ -18,7 +18,7 @@ export const MoviesBuilder = () => {
   const moviesStore = useAppSelector(selectMovies);
   const dispatch = useAppDispatch();
   //const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState(moviesStore.categories);
+  const [selectedCategoryRange, setSelectedCategoryRange] = useState(moviesStore.categories);
   const [maxItemsPerPage, setMaxItemsPerPage] = useState(3);
 
   const handleDeleteButton = (movie: MovieElement) => {
@@ -31,7 +31,7 @@ export const MoviesBuilder = () => {
     reason: AutocompleteChangeReason,
     details?: AutocompleteChangeDetails<string> | undefined
   ) => {
-    setSelectedCategory(value);
+    setSelectedCategoryRange(value);
   }
 
   const handleMaxItemsChange = (event: InputChangeEvent) => {
@@ -47,18 +47,18 @@ export const MoviesBuilder = () => {
   }, [dispatch, moviesStore.movies.length])
 
   useEffect(() => {
-    if ((selectedCategory === undefined
-      || !(moviesStore.categories.some((e) => selectedCategory.includes(e))))
+    if ((selectedCategoryRange === undefined
+      || !(moviesStore.categories.some((e) => selectedCategoryRange.includes(e))))
       && moviesStore.categories.length) {
         console.log('oups');
-      setSelectedCategory(moviesStore.categories);
+      setSelectedCategoryRange(moviesStore.categories);
     }
-  }, [selectedCategory, moviesStore.categories])
+  }, [selectedCategoryRange, moviesStore.categories])
 
   return (
     <>
       <MultiSelect
-        selected={selectedCategory}
+        selected={selectedCategoryRange}
         items={moviesStore.categories}
         onChange={handleSelectChange}
         label={'category'}
@@ -67,7 +67,7 @@ export const MoviesBuilder = () => {
         setter={handleMaxItemsChange}
       />
       <PaginateMovies
-        movies={moviesStore.movies.filter((movie) => selectedCategory.includes(movie.category))}
+        movies={moviesStore.movies.filter((movie) => selectedCategoryRange.includes(movie.category))}
         maxItemsPerPage={maxItemsPerPage}
         onButtonClick={handleDeleteButton}
       />
